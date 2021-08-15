@@ -17,7 +17,7 @@ namespace ExoTracker {
 		private static IntPtr processHandle;
 
 		public static void Main(string[] args) {
-			Console.Title = "ExoTracker v0.03";
+			Console.Title = "ExoTracker v0.04";
 
 			while (true) {
 				try {
@@ -71,6 +71,10 @@ namespace ExoTracker {
 							Console.CursorLeft = 0;
 							Console.CursorTop = 0;
 
+							Console.WriteLine("position X     " + positionX.ToString().PadRight(20));
+							Console.WriteLine("position Y     " + positionY.ToString().PadRight(20));
+							Console.WriteLine("position Z     " + positionZ.ToString().PadRight(20));
+							Console.WriteLine();
 							Console.WriteLine("velocity verti " + velocityY.ToString().PadRight(20));
 							Console.WriteLine("velocity horiz " + velocityHorizontal.ToString().PadRight(20));
 							Console.WriteLine("velocity total " + velocityTotal.ToString().PadRight(20));
