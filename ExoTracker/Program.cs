@@ -20,10 +20,6 @@ namespace ExoTracker {
 
 		public static void Main(string[] args) {
 			Console.Title = "ExoTracker v0.06";
-			Foo();
-		}
-
-		static void Foo() {
 			while (true) {
 				try {
 					Console.WriteLine("searching for game process...");
