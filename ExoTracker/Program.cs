@@ -4,9 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Windows.Forms;
-using Kane.GlobalHook;
-using Keys = Kane.GlobalHook.Keys;
 
 namespace ExoTracker {
 	internal class Program {
@@ -20,31 +17,9 @@ namespace ExoTracker {
 
 		private static IntPtr processHandle;
 
-		private static Stopwatch stopwatch = new();
-		private static List<TimeSpan> timestamps = new();
-
-		private static Stage stage = Stage.Menu;
-
 		public static void Main(string[] args) {
-			Console.Title = "ExoTracker v0.05";
-
-			new Thread(Foo).Start();
-
-			var keyboardHook = new KeyboardHook();
-			keyboardHook.KeyEvent += (sender, eventArgs) => {
-				if (eventArgs.Key != Keys.Enter || eventArgs.KeyboardMessage != KeyboardMessages.KeyDown) return;
-				if (stopwatch.IsRunning) {
-					stopwatch.Stop();
-					stage = Stage.Menu;
-				}
-				else {
-					timestamps.Clear();
-					stage = Stage.Start;
-					stopwatch.Restart();
-				}
-			};
-			keyboardHook.Hook();
-			Application.Run();
+			Console.Title = "ExoTracker v0.06";
+			Foo();
 		}
 
 		static void Foo() {
@@ -88,66 +63,12 @@ namespace ExoTracker {
 						Console.CursorLeft = 0;
 						Console.CursorTop = 0;
 
-						switch (stage) {
-							case Stage.Start:
-								if (positionX == 7676f && positionY == 868f && positionZ == 1027f) {
-									timestamps.Add(stopwatch.Elapsed);
-									stage = Stage.PlanetIntro;
-								}
-
-								break;
-
-							case Stage.PlanetIntro:
-								if (positionX != 7676f || positionY != 868f || positionZ != 1027f) {
-									timestamps.Add(stopwatch.Elapsed);
-									stage = Stage.Tutorial;
-								}
-
-								break;
-
-							case Stage.Tutorial:
-								if (distanceTotal <= 60000f) {
-									timestamps.Add(stopwatch.Elapsed);
-									stage = Stage.Km60;
-								}
-
-								break;
-
-							case Stage.Km60:
-								if (distanceTotal <= 40000f) {
-									timestamps.Add(stopwatch.Elapsed);
-									stage = Stage.Km40;
-								}
-
-								break;
-
-							case Stage.Km40:
-								if (distanceTotal <= 20000f) {
-									timestamps.Add(stopwatch.Elapsed);
-									stage = Stage.Km20;
-								}
-
-								break;
-
-							case Stage.Km20:
-								if (distanceTotal <= 0f) {
-									timestamps.Add(stopwatch.Elapsed);
-									stage = Stage.Collider;
-								}
-
-								break;
-						}
-
 						Console.WriteLine("velocity verti " + ((int)velocityY).ToString().PadRight(10));
 						Console.WriteLine("velocity horiz " + ((int)velocityHorizontal).ToString().PadRight(10));
 						Console.WriteLine("velocity total " + ((int)velocityTotal).ToString().PadRight(10));
 						Console.WriteLine();
 						Console.WriteLine("distance to go " + ((int)distanceTotal - 7500).ToString().PadRight(10));
 						Console.WriteLine();
-						Console.WriteLine("current stage: " + stage.ToString().PadRight(15));
-						foreach (var timestamp in timestamps) Console.WriteLine(timestamp);
-						Console.WriteLine("                         ");
-						Console.WriteLine(stopwatch.Elapsed);
 
 						Thread.Sleep(50);
 					}
@@ -157,17 +78,6 @@ namespace ExoTracker {
 					Console.WriteLine("restarting...");
 				}
 			}
-		}
-
-		enum Stage {
-			Menu,
-			Start,
-			PlanetIntro,
-			Tutorial,
-			Km60,
-			Km40,
-			Km20,
-			Collider
 		}
 
 		static ulong ResolvePointer(ProcessModule module, uint baseOffset, uint[] offsets) {
