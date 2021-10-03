@@ -62,11 +62,11 @@ namespace ExoTracker {
 						Console.CursorLeft = 0;
 						Console.CursorTop = 0;
 
-						Console.WriteLine("velocity verti " + ((int)velocityY).ToString().PadRight(10));
-						Console.WriteLine("velocity horiz " + ((int)velocityHorizontal).ToString().PadRight(10));
-						Console.WriteLine("velocity total " + ((int)velocityTotal).ToString().PadRight(10));
+						Console.WriteLine("speed vertical   " + ((int)velocityY).ToString().PadRight(10));
+						Console.WriteLine("speed horizontal " + ((int)velocityHorizontal).ToString().PadRight(10));
+						Console.WriteLine("speed total      " + ((int)velocityTotal).ToString().PadRight(10));
 						Console.WriteLine();
-						Console.WriteLine("distance to go " + ((int)distanceTotal - 7500).ToString().PadRight(10));
+						Console.WriteLine("distance to go   " + ((int)distanceTotal - 7500).ToString().PadRight(10));
 						Console.WriteLine();
 
 						Thread.Sleep(50);
