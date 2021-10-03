@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -73,8 +75,11 @@ namespace ExoTracker {
 					}
 				}
 				catch (Exception exception) {
-					Console.WriteLine("ExoTracker crashed due to " + exception);
-					Console.WriteLine("restarting...");
+					File.WriteAllText(
+						$"crashlog {DateTime.Now.ToString().Replace(':', '_')}",
+						exception.StackTrace
+					);
+					Console.Clear();
 				}
 			}
 		}
