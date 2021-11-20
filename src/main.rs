@@ -49,7 +49,7 @@ fn read_and_print(term: &Term, process: &Process, unity_player: usize) -> WinRes
 	let address = resolve_multilevel_pointer(
 		&process,
 		unity_player + 0x01A03D00,//0x0156C900
-		&[0x160, 0x68, 0x10]//0x3F8, 0x1A8, 0x28, 0xA0
+		&[0x58, 0x158, 0x28, 0xA0]//0x3F8, 0x1A8, 0x28, 0xA0
 	)?;
 
 	//let position = process.read_mem::<Vector3<f32>>(address + 0x00)?;
