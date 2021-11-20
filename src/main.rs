@@ -17,7 +17,7 @@ use utils::*;
 fn main() {
 	let term = Term::stdout();
 	term.hide_cursor().expect("");
-	term.set_title("ExoTracker v1.00");
+	term.set_title("ExoTracker v1.01");
 
 	loop {
 		term.clearprint("searching for game process...");
