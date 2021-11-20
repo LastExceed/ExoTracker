@@ -8,11 +8,11 @@ use win_mem::process::Process;
 use win_mem::utils::WinResult;
 use utils::*;
 
-const CANNON: Vector3<f32> = Vector3::new(
-	-66000f32,
-	0f32,
-	0f32
-);
+// const CANNON: Vector3<f32> = Vector3::new(
+// 	-66000f32,
+// 	0f32,
+// 	0f32
+// );
 
 fn main() {
 	let term = Term::stdout();
@@ -52,17 +52,17 @@ fn read_and_print(term: &Term, process: &Process, unity_player: usize) -> WinRes
 		&[0x160, 0x68, 0x10]//0x3F8, 0x1A8, 0x28, 0xA0
 	)?;
 
-	let position = process.read_mem::<Vector3<f32>>(address + 0x00)?;
+	//let position = process.read_mem::<Vector3<f32>>(address + 0x00)?;
 	let velocity = process.read_mem::<Vector3<f32>>(address + 0x30)?;
 
-	let distance = CANNON - position;
+	//let distance = CANNON - position;
 
 	term.move_cursor_to(0, 0).expect("");
 	println!("speed vertical   {}     ", velocity.y                as i32);
 	println!("speed horizontal {}     ", velocity.xz().magnitude() as i32);
 	println!("speed total      {}     ", velocity.magnitude()      as i32);
-	println!();
-	println!("distance to go   {}     ", distance.magnitude()      as i32 - 7500);
+	//println!();
+	//println!("distance to go   {}     ", distance.magnitude()      as i32 - 7500);
 
 	Ok(())
 }
