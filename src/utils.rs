@@ -1,17 +1,5 @@
-use console::Term;
 use win_mem::process::Process;
 use win_mem::utils::WinResult;
-
-pub trait TermEx {
-	fn clearprint(&self, text: &str) -> ();
-}
-
-impl TermEx for Term {
-	fn clearprint(&self, text: &str) -> () {
-		self.clear_screen().expect("screen clear failed");
-		println!("{}", text);
-	}
-}
 
 pub fn resolve_multilevel_pointer(process: &Process, base: usize, offsets: &[usize]) -> WinResult<usize> {
 	let mut address = base;
